@@ -1,0 +1,11 @@
+# Default values for jaeger.
+# This is a YAML-formatted file.
+# Jaeger values are grouped by component. Cassandra values override subchart values
+
+tag: 1.12.0
+ui:
+  url: jaeger-ui.k8s.io
+  secret: mysecret
+
+agent:
+  url: jaeger-agent.k8s.io

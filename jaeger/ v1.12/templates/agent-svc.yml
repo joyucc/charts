@@ -1,0 +1,44 @@
+apiVersion: v1
+    kind: Service
+    metadata:
+        name: jaeger-agent
+        labels:
+            app: jaeger
+            jaeger-infra: agent-service
+    spec:
+        ports:
+            - name: agent-zipkin-thrift
+              port: 5775
+              protocol: UDP
+              targetPort: 5775
+            - name: agent-compact
+              port: 6831
+              protocol: UDP
+              targetPort: 6831
+            - name: agent-binary
+              port: 6832
+              protocol: UDP
+              targetPort: 6832
+            - name: agent-sampler-manager
+              port: 5778
+              protocol: TCP
+              targetPort: 5778
+        clusterIP: None
+        selector:
+            jaeger-infra: jaeger-pod
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: jaeger-agent-ingress
+    annotations:
+        kubernetes.io/ingress.class: traefik
+spec:
+    rules:
+        - host: {{ .Values.agent.url }}
+          http:
+              paths:
+                  - path: /
+                    backend:
+                        serviceName: jaeger-agent
+                        servicePort: agent-compact
