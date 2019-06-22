@@ -1,0 +1,17 @@
+categories:
+  - jaeger
+questions:
+  - variable: ui.url
+    default: jaeger.k8s.io
+    group: "Ingress"
+    description: "Expose Jaeger "
+    type: string
+    label: Jaeger ingress
+    required: true
+  - variable: agent.url
+    default: agent.k8s.io
+    group: "Ingress"
+    description: "Expose agent "
+    type: string
+    label: Agent ingress
+    required: true

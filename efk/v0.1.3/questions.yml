@@ -106,3 +106,10 @@ questions:
   type: boolean
   label: Enable Fluent-Bit
   required: true
+- variable: ingress.host
+  default: elastic.k8s.io
+  group: "Ingress"
+  description: "Expose elasticsearch "
+  type: string
+  label: Elastic ingress
+  required: true
