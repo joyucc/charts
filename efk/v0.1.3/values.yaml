@@ -12,7 +12,8 @@ elasticsearch:
     pullPolicy: "IfNotPresent"
 
   terminationGracePeriodSeconds: 30  # Duration in seconds a pod needs to terminate gracefully.
-
+  ingress:
+    host: elastic.k8s.io
   # config elasticsearch master nodes
   master:
     name: master

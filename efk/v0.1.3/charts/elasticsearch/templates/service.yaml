@@ -10,11 +10,9 @@ metadata:
 spec:
   type: {{ .Values.master.service.type }}
   ports:
-    {{ if .Values.master.exposeHttp }}
     - name: http
       port: 9200
       targetPort: http
-    {{ end }}
     - name: transport
       port: 9300
       targetPort: transport
@@ -22,3 +20,19 @@ spec:
     app: {{ template "elasticsearch.name" . }}
     release: {{ .Release.Name }}
     component: "{{ .Values.master.name }}"
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: elasticsearch-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ template "elasticsearch.fullname" . }}
+              servicePort: 9200
